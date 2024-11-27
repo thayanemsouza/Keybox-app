@@ -1,9 +1,15 @@
 import React, { useContext } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
-import { PasswordContext } from "../contexts/PasswordContext.js";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert, Pressable } from "react-native";
+import * as Clipboard from "expo-clipboard"; // Importando expo-clipboard
+import { PasswordContext } from "../contexts/PasswordContext";
 
 const SavedPasswords = ({ navigation }) => {
   const { savedPasswords } = useContext(PasswordContext);
+
+  const handleCopyPassword = async (password) => {
+    await Clipboard.setStringAsync(password); // Copia a senha
+    Alert.alert("Senha copiada"); // Exibe o alerta
+  };
 
   return (
     <View style={styles.container}>
@@ -14,9 +20,12 @@ const SavedPasswords = ({ navigation }) => {
           data={savedPasswords}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <View style={styles.item}>
+            <Pressable
+              style={styles.item}
+              onLongPress={() => handleCopyPassword(item)}
+            >
               <Text style={styles.password}>{item}</Text>
-            </View>
+            </Pressable>
           )}
         />
       ) : (
@@ -47,10 +56,14 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+    backgroundColor: "#e9e9e9",
+    borderRadius: 5,
+    marginBottom: 10,
   },
   password: {
     fontSize: 18,
     color: "#3445D9",
+    textAlign: "center",
   },
   noPasswords: {
     fontSize: 18,
