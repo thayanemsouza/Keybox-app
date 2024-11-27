@@ -1,12 +1,12 @@
 import Slider from "@react-native-community/slider";
 import { Text, View, StyleSheet, Image, TouchableOpacity, Modal } from "react-native";
 import { useState } from 'react'
-import { ModalPassword } from '../../components/modal/app.js'
+import { ModalPassword } from './src/components/modal/app.js'
 
 
 let charset = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ0123456789"
 
-export function Home() {
+export default function Index() {
 
   const [size, setSize] = useState(6)
   const [passwordValue, setPasswordValue] = useState("")
@@ -27,7 +27,7 @@ export function Home() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/logo.png")}
+        source={require("./src/assets/logo-keybox.png")}
         style={styles.logo}
       />
      
@@ -51,7 +51,7 @@ export function Home() {
       </TouchableOpacity>
 
       <Modal visible={modalVisible} animationType="fade" transparent={true}>
-        <ModalPassword password={passwordValue} handleClose={ () => setModalVisible(false)}/> 
+        <ModalPassword password={passwordValue} handleClose={ () => setModalVisible(false) }/> 
       </Modal>
 
     </View>
@@ -64,6 +64,7 @@ export function Home() {
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: "#F3F3FF",
+
     },
 
     logo: {
@@ -99,8 +100,8 @@ export function Home() {
     buttonText: {
       fontSize: 18,
       color: "#FFF",
+ 
+
     }
 
     })
-
-
